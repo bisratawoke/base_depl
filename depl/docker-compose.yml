@@ -1,0 +1,30 @@
+version: "3.2"
+
+services:
+  first:
+    image: bisratawoke/router
+    volumes:
+      - type: volume
+        source: firstconf
+        target: /etc/nginx/conf.d
+      - type: volume
+        source: firstapp
+        target: /usr/bin/app
+    deploy:
+      replicas: 1
+    ports:
+      - "8000:80"
+
+volumes:
+  firstconf:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: addr=192.168.1.7,rw
+      device: ":/home/bisrat/Desktop/mnt/first/conf"
+  firstapp:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: addr=192.168.1.7,rw
+      device: ":/home/bisrat/Desktop/mnt/first/app"
